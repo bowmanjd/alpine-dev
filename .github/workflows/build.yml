@@ -1,0 +1,21 @@
+name: Build Container
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+
+jobs:
+  build-container:
+    name: Build container
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v2
+
+      - name: Run buildah build script
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        run: python3 ./makecontainer.py
